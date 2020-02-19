@@ -10,22 +10,62 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var currentValue: Int = 0
+    var targetValue: Int = 0
+    var roundValue: Int = 0
+    var scoreValue: Int = 0
+    
+    
+    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var targetLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var roundLabel: UILabel!
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        startNewRound()
+
+    }
+    
+    func startNewRound() {
+        targetValue = Int.random(in: 1...100)
+        currentValue = 50
+        slider.value = Float(currentValue)
+        updateLabels()
     }
     
     
-    @IBAction func showAlert() {
-        let alert = UIAlertController(title: "Hello World", message: "My first app", preferredStyle: .alert)
+    func updateLabels() {
+        targetLabel.text = String(targetValue)
+        roundLabel.text = String(roundValue)
+        scoreLabel.text = String(scoreValue)
         
-        let action = UIAlertAction(title: "Awesome", style: .default, handler: nil)
+        roundValue = roundValue + 1
+    }
+    
+    
+    
+    @IBAction func showAlert() {
+        let message = "Current Value \(currentValue)" +
+        "\nTarget Value \(targetValue)"
+        
+        let alert = UIAlertController(title: "Slider Value", message: message, preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
         
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
+        startNewRound()
         
     }
     
+    @IBAction func sliderMoved(_ slider: UISlider) {
+        currentValue = Int(slider.value.rounded())
+    }
+
 }
 
