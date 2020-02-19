@@ -87,12 +87,14 @@ class ViewController: UIViewController {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+        let action = UIAlertAction(title: "Dismiss", style: .default, handler: {
+            action in
+            self.startNewRound()
+        })
         
         alert.addAction(action)
         
         present(alert, animated: true, completion: nil)
-        startNewRound()
         
     }
     
@@ -100,5 +102,14 @@ class ViewController: UIViewController {
         currentValue = Int(slider.value.rounded())
     }
 
+    @IBAction func startOver() {
+        currentValue = 0
+        targetValue = 0
+        round = -1
+        score = 0
+        
+        startNewRound()
+    }
+    
 }
 
