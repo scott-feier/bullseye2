@@ -20,17 +20,35 @@ class ViewController: UIViewController {
     @IBOutlet weak var targetLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var roundLabel: UILabel!
-
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         startNewRound()
+        
+        let thumbImageNormal = #imageLiteral(resourceName: "SliderThumb-Normal")
+        slider.setThumbImage(thumbImageNormal, for: .normal)
+        
+        let thumbImageHighlighted = #imageLiteral(resourceName: "SliderThumb-Highlighted")
+        slider.setThumbImage(thumbImageHighlighted, for: .highlighted)
+        
+        let insets = UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
+        
+        let trackLeftImage = #imageLiteral(resourceName: "SliderTrackLeft")
+        let trackLeftResizable = trackLeftImage.resizableImage(withCapInsets: insets)
+        slider.setMinimumTrackImage(trackLeftResizable, for: .normal)
+        
+        
+        let trackRightImage = #imageLiteral(resourceName: "SliderTrackRight")
+        let trackRightResizable = trackRightImage.resizableImage(withCapInsets: insets)
+        slider.setMaximumTrackImage(trackRightResizable, for: .normal)
+        
     }
     
     func startNewRound() {
-//reset
+        //reset
         targetValue = Int.random(in: 1...100)
         currentValue = 50
         slider.value = Float(currentValue)
@@ -63,7 +81,7 @@ class ViewController: UIViewController {
         
     }
     
-
+    
     @IBAction func showAlert() {
         
         var points: Int = 0
@@ -82,7 +100,7 @@ class ViewController: UIViewController {
         
         
         let message = "Current Value \(currentValue)" +
-        "\nTarget Value \(targetValue)" +
+            "\nTarget Value \(targetValue)" +
         "\nPoints \(points)"
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -101,7 +119,7 @@ class ViewController: UIViewController {
     @IBAction func sliderMoved(_ slider: UISlider) {
         currentValue = Int(slider.value.rounded())
     }
-
+    
     @IBAction func startOver() {
         currentValue = 0
         targetValue = 0
